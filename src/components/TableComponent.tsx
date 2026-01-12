@@ -1,3 +1,4 @@
+import { memo } from "react";
 import {
   flexRender,
   Table as RTable,
@@ -12,7 +13,7 @@ type TableComponentProps<TData> = {
   className?: string;
 };
 
-function TableComponent<TData>({
+function TableComponentInner<TData>({
   table,
   className = "",
 }: TableComponentProps<TData>) {
@@ -109,8 +110,7 @@ function TableComponent<TData>({
   );
 }
 
+// Memoize to prevent unnecessary re-renders
+const TableComponent = memo(TableComponentInner) as typeof TableComponentInner;
+
 export default TableComponent;
-
-
-
-

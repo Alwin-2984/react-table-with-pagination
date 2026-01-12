@@ -23,17 +23,17 @@ module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
     // Add this line to include the library components
-    "./node_modules/@your-scope/tanstack-table-components/dist/**/*.{js,mjs}",
+    "./node_modules/@alwinkc/tanstack-table-components/dist/**/*.{js,mjs}",
   ],
-  darkMode: 'class', // Enable dark mode
+  darkMode: "class", // Enable dark mode
   theme: {
     extend: {},
   },
   plugins: [
     // Optional: Add scrollbar plugin for better scrollbar styling
-    require('tailwind-scrollbar')({ nocompatible: true }),
+    require("tailwind-scrollbar")({ nocompatible: true }),
   ],
-}
+};
 ```
 
 ### 3. Import Tailwind CSS
@@ -82,8 +82,8 @@ Then add it to your `tailwind.config.js` plugins array as shown above.
 You can override the default styles by passing a `className` prop:
 
 ```tsx
-<TableComponent 
-  table={table} 
+<TableComponent
+  table={table}
   className="shadow-lg rounded-lg border border-gray-300"
 />
 ```
@@ -99,21 +99,16 @@ module.exports = {
       colors: {
         // Override blue colors used in the components
         blue: {
-          50: '#your-color',
-          500: '#your-color',
-          600: '#your-color',
+          50: "#your-color",
+          500: "#your-color",
+          600: "#your-color",
         },
       },
     },
   },
-}
+};
 ```
 
 ## Without Tailwind CSS
 
 If you prefer not to use Tailwind CSS, you'll need to provide your own styles. The components use standard HTML elements (`<table>`, `<th>`, `<td>`, etc.) that you can style with regular CSS.
-
-
-
-
-

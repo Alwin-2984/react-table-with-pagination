@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo, useMemo } from "react";
 
 interface PaginationProps {
   totalPages?: number;
@@ -9,7 +9,7 @@ interface PaginationProps {
   pagination?: boolean;
 }
 
-const Pagination: React.FC<PaginationProps> = ({
+const PaginationInner: React.FC<PaginationProps> = ({
   totalPages = 1,
   currentPage = 1,
   handlePageChange,
@@ -17,45 +17,44 @@ const Pagination: React.FC<PaginationProps> = ({
   onPageSizeChange,
   pagination,
 }) => {
-  const getPageNumbers = (): (number | string)[] => {
-    const pageNumbers: (number | string)[] = [];
+  // Memoize page numbers calculation to avoid recalculating on every render
+  const pageNumbers = useMemo((): (number | string)[] => {
+    const pages: (number | string)[] = [];
     const totalPagesToShow = 3;
     const ellipsis = "...";
 
     if (totalPages <= totalPagesToShow + 2) {
       for (let i = 1; i <= totalPages; i++) {
-        pageNumbers.push(i);
+        pages.push(i);
       }
     } else {
-      pageNumbers.push(1);
+      pages.push(1);
 
       if (currentPage <= 3) {
         for (let i = 2; i <= totalPagesToShow + 1; i++) {
-          pageNumbers.push(i);
+          pages.push(i);
         }
-        pageNumbers.push(ellipsis);
+        pages.push(ellipsis);
       } else if (currentPage >= totalPages - 2) {
-        pageNumbers.push(ellipsis);
+        pages.push(ellipsis);
         for (let i = totalPages - totalPagesToShow; i < totalPages; i++) {
-          pageNumbers.push(i);
+          pages.push(i);
         }
       } else {
-        pageNumbers.push(ellipsis);
+        pages.push(ellipsis);
         for (let i = currentPage - 1; i <= currentPage + 1; i++) {
-          pageNumbers.push(i);
+          pages.push(i);
         }
-        pageNumbers.push(ellipsis);
+        pages.push(ellipsis);
       }
 
       if (totalPages > 1) {
-        pageNumbers.push(totalPages);
+        pages.push(totalPages);
       }
     }
 
-    return pageNumbers;
-  };
-
-  const pageNumbers = getPageNumbers();
+    return pages;
+  }, [totalPages, currentPage]);
 
   return (
     <>
@@ -205,8 +204,7 @@ const Pagination: React.FC<PaginationProps> = ({
   );
 };
 
+// Memoize to prevent unnecessary re-renders when props haven't changed
+const Pagination = memo(PaginationInner);
+
 export default Pagination;
-
-
-
-
