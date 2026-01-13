@@ -20,26 +20,16 @@ function TableComponentInner<TData>({
   const hasData = table.getRowModel().rows.length > 0;
 
   return (
-    <div
-      className={clsx(
-        "relative overflow-x-auto  bg-white dark:bg-gray-900",
-        "scrollbar-thin scrollbar-track-gray-200 dark:scrollbar-track-gray-700 scrollbar-thumb-gray-400 dark:scrollbar-thumb-gray-600",
-        "hover:scrollbar-thumb-gray-500 dark:hover:scrollbar-thumb-gray-500",
-        className
-      )}
-    >
-      <table className="min-w-full">
+    <div className={clsx("tstc-wrapper", className)}>
+      <table className="tstc-table">
         <thead>
-          <tr className="border-b border-gray-100 dark:border-gray-700">
+          <tr className="tstc-thead-row">
             {table.getHeaderGroups()?.map((headerGroup: HeaderGroup<TData>) =>
               headerGroup.headers.map((header, index: number) => (
                 <th
                   key={`${header.id}-${index}`}
                   scope="col"
-                  className={clsx(
-                    "px-3 py-2 text-left text-sm font-normal tracking-wide text-gray-500 dark:text-gray-400",
-                    "bg-blue-50 dark:bg-gray-800"
-                  )}
+                  className="tstc-th"
                   style={{
                     width:
                       header.getSize() !== 150
@@ -62,19 +52,16 @@ function TableComponentInner<TData>({
             )}
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900">
+        <tbody className="tstc-tbody">
           {hasData ? (
             table.getRowModel().rows.map((row: Row<TData>, index: number) => (
-              <tr
-                key={index.toString()}
-                className="transition-colors duration-150 hover:bg-gray-50 dark:hover:bg-gray-800"
-              >
+              <tr key={index.toString()} className="tstc-tr">
                 {row
                   .getVisibleCells()
                   .map((cell: Cell<TData, unknown>, index: number) => (
                     <td
                       key={`${cell.id}-${index}`}
-                      className="px-3 py-2 text-sm font-light text-gray-900 dark:text-gray-100"
+                      className="tstc-td"
                       style={{
                         width:
                           cell.column.getSize() !== 150
@@ -96,10 +83,7 @@ function TableComponentInner<TData>({
             ))
           ) : (
             <tr>
-              <td
-                colSpan={table.getAllColumns().length}
-                className="px-6 py-12 text-center text-sm text-gray-500 dark:text-gray-400"
-              >
+              <td colSpan={table.getAllColumns().length} className="tstc-empty">
                 No data available
               </td>
             </tr>

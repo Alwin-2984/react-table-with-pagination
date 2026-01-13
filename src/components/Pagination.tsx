@@ -59,18 +59,16 @@ const PaginationInner: React.FC<PaginationProps> = ({
   return (
     <>
       {pagination && (
-        <div className="flex w-full min-w-[443px] items-center justify-between rounded-b-lg bg-white px-4 py-3 dark:bg-gray-800">
+        <div className="tstc-pagination">
           {/* Left side - Items per page selector */}
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-gray-500 max-sm:hidden dark:text-gray-400">
-              Rows per page:
-            </span>
+          <div className="tstc-pagination-controls">
+            <span className="tstc-pagination-label">Rows per page:</span>
             <select
               value={pageSize}
               onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                 onPageSizeChange(Number(e.target.value))
               }
-              className="block w-20 rounded-md border-gray-200 bg-white text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100 dark:focus:border-blue-400 dark:focus:ring-blue-400"
+              className="tstc-pagination-select"
             >
               {[5, 7, 10, 15, 20, 50, 100, 1000, 10000].map((size) => (
                 <option key={size} value={size}>
@@ -81,23 +79,23 @@ const PaginationInner: React.FC<PaginationProps> = ({
           </div>
 
           {/* Right side - Pagination controls */}
-          <div className="flex items-center gap-4">
+          <div className="tstc-pagination-info">
             {/* Page info */}
-            <span className="text-sm text-gray-500 max-sm:hidden dark:text-gray-400">
+            <span className="tstc-pagination-label">
               Page {currentPage} of {totalPages}
             </span>
 
             {/* Navigation */}
-            <nav className="flex items-center gap-1" aria-label="Pagination">
+            <nav className="tstc-pagination-nav" aria-label="Pagination">
               {/* First Page */}
               <button
                 onClick={() => handlePageChange(1)}
                 disabled={currentPage === 1}
-                className="p-1 text-gray-400 hover:text-gray-600 disabled:cursor-not-allowed disabled:opacity-50 dark:text-gray-500 dark:hover:text-gray-300"
+                className="tstc-pagination-button"
                 aria-label="First Page"
               >
                 <svg
-                  className="h-5 w-5"
+                  className="tstc-pagination-icon"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -115,11 +113,11 @@ const PaginationInner: React.FC<PaginationProps> = ({
               <button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className="p-1 text-gray-400 hover:text-gray-600 disabled:cursor-not-allowed disabled:opacity-50 dark:text-gray-500 dark:hover:text-gray-300"
+                className="tstc-pagination-button"
                 aria-label="Previous Page"
               >
                 <svg
-                  className="h-5 w-5"
+                  className="tstc-pagination-icon"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -134,34 +132,38 @@ const PaginationInner: React.FC<PaginationProps> = ({
               </button>
 
               {/* Page Numbers */}
-              {pageNumbers.map((page, index) => (
-                <button
-                  key={index}
-                  onClick={() =>
-                    typeof page === "number" && handlePageChange(page)
-                  }
-                  disabled={page === "..."}
-                  className={`flex h-8 min-w-[32px] items-center justify-center rounded text-sm font-medium transition-colors ${
-                    currentPage === page
-                      ? "bg-blue-500 text-white dark:bg-blue-600"
-                      : page === "..."
-                      ? "cursor-default text-gray-400 dark:text-gray-500"
-                      : "text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800"
-                  } ${page === "..." ? "cursor-default" : "cursor-pointer"} `}
-                >
-                  {page}
-                </button>
-              ))}
+              {pageNumbers.map((page, index) => {
+                const isActive = currentPage === page;
+                const isEllipsis = page === "...";
+                const pageClasses = isActive
+                  ? "tstc-pagination-page tstc-pagination-page-active"
+                  : isEllipsis
+                  ? "tstc-pagination-page tstc-pagination-page-ellipsis"
+                  : "tstc-pagination-page tstc-pagination-page-inactive";
+
+                return (
+                  <button
+                    key={index}
+                    onClick={() =>
+                      typeof page === "number" && handlePageChange(page)
+                    }
+                    disabled={isEllipsis}
+                    className={pageClasses}
+                  >
+                    {page}
+                  </button>
+                );
+              })}
 
               {/* Next */}
               <button
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className="p-1 text-gray-400 hover:text-gray-600 disabled:cursor-not-allowed disabled:opacity-50 dark:text-gray-500 dark:hover:text-gray-300"
+                className="tstc-pagination-button"
                 aria-label="Next Page"
               >
                 <svg
-                  className="h-5 w-5"
+                  className="tstc-pagination-icon"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -179,11 +181,11 @@ const PaginationInner: React.FC<PaginationProps> = ({
               <button
                 onClick={() => handlePageChange(totalPages)}
                 disabled={currentPage === totalPages}
-                className="p-1 text-gray-400 hover:text-gray-600 disabled:cursor-not-allowed disabled:opacity-50 dark:text-gray-500 dark:hover:text-gray-300"
+                className="tstc-pagination-button"
                 aria-label="Last Page"
               >
                 <svg
-                  className="h-5 w-5"
+                  className="tstc-pagination-icon"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"

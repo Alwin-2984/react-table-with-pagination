@@ -1,0 +1,106 @@
+/**
+ * TanStack Table Components - Compiled Styles
+ * 
+ * These styles are pre-compiled from Tailwind CSS.
+ * Import this file in your app to use the table components.
+ * 
+ * Usage:
+ *   import '@alwinkc/tanstack-table-components/styles.css';
+ */
+
+@tailwind components;
+
+@layer components {
+  /* Table Container */
+  .tstc-wrapper {
+    @apply relative overflow-x-auto bg-white dark:bg-gray-900;
+  }
+
+  .tstc-table {
+    @apply min-w-full;
+  }
+
+  /* Table Header */
+  .tstc-thead-row {
+    @apply border-b border-gray-100 dark:border-gray-700;
+  }
+
+  .tstc-th {
+    @apply px-3 py-2 text-left text-sm font-normal tracking-wide;
+    @apply text-gray-500 dark:text-gray-400 bg-blue-50 dark:bg-gray-800;
+  }
+
+  /* Table Body */
+  .tstc-tbody {
+    @apply divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900;
+  }
+
+  .tstc-tr {
+    @apply transition-colors duration-150 hover:bg-gray-50 dark:hover:bg-gray-800;
+  }
+
+  .tstc-td {
+    @apply px-3 py-2 text-sm font-light text-gray-900 dark:text-gray-100;
+  }
+
+  .tstc-empty {
+    @apply px-6 py-12 text-center text-sm text-gray-500 dark:text-gray-400;
+  }
+
+  /* Pagination Container */
+  .tstc-pagination {
+    @apply flex w-full min-w-[443px] items-center justify-between;
+    @apply rounded-b-lg bg-white px-4 py-3 dark:bg-gray-800;
+  }
+
+  .tstc-pagination-controls {
+    @apply flex items-center gap-2;
+  }
+
+  .tstc-pagination-label {
+    @apply text-sm text-gray-500 max-sm:hidden dark:text-gray-400;
+  }
+
+  .tstc-pagination-select {
+    @apply block w-20 rounded-md border-gray-200 bg-white text-sm text-gray-900;
+    @apply focus:border-blue-500 focus:ring-blue-500;
+    @apply dark:border-gray-600 dark:bg-gray-800 dark:text-gray-100;
+    @apply dark:focus:border-blue-400 dark:focus:ring-blue-400;
+  }
+
+  .tstc-pagination-info {
+    @apply flex items-center gap-4;
+  }
+
+  .tstc-pagination-nav {
+    @apply flex items-center gap-1;
+  }
+
+  .tstc-pagination-button {
+    @apply p-1 text-gray-400 hover:text-gray-600;
+    @apply disabled:cursor-not-allowed disabled:opacity-50;
+    @apply dark:text-gray-500 dark:hover:text-gray-300;
+  }
+
+  .tstc-pagination-icon {
+    @apply h-5 w-5;
+  }
+
+  .tstc-pagination-page {
+    @apply flex h-8 min-w-[32px] items-center justify-center;
+    @apply text-gray-800 dark:text-gray-100 rounded text-sm font-medium transition-colors;
+  }
+
+  .tstc-pagination-page-active {
+    @apply bg-blue-500 text-white dark:text-white dark:bg-blue-600;
+  }
+
+  .tstc-pagination-page-inactive {
+    @apply text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-800;
+  }
+
+  .tstc-pagination-page-ellipsis {
+    @apply cursor-default text-gray-400 dark:text-gray-500;
+  }
+}
+

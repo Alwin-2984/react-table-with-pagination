@@ -1,6 +1,6 @@
 # TanStack Table Components
 
-A React component library built on top of [@tanstack/react-table](https://tanstack.com/table/v8) with built-in pagination support and beautiful styling using Tailwind CSS.
+A React component library built on top of [@tanstack/react-table](https://tanstack.com/table/v8) with built-in pagination support and beautiful pre-compiled styling.
 
 ## Features
 
@@ -10,16 +10,17 @@ A React component library built on top of [@tanstack/react-table](https://tansta
 - 🎯 Full TypeScript support
 - 🚀 Built on TanStack Table v8
 - ⚛️ React 18 & 19 compatible
-- 🎨 Styled with Tailwind CSS
+- ✨ Pre-compiled CSS - works without Tailwind!
+- 📦 Tiny bundle size (< 10KB)
 
 ## Installation
 
 ```bash
-npm install @alwinkc/tanstack-table-components
+npm install @alwinkc/tanstack-table-components @tanstack/react-table
 # or
-yarn add @alwinkc/tanstack-table-components
+yarn add @alwinkc/tanstack-table-components @tanstack/react-table
 # or
-pnpm add @alwinkc/tanstack-table-components
+pnpm add @alwinkc/tanstack-table-components @tanstack/react-table
 ```
 
 ### Peer Dependencies
@@ -31,52 +32,29 @@ npm install @tanstack/react-table react react-dom
 ```
 
 **Supported versions:**
-
 - React: ^18.0.0 or ^19.0.0
 - React DOM: ^18.0.0 or ^19.0.0
 - TanStack Table: ^8.0.0
 
-### Tailwind CSS Setup
+### Setup
 
-This library uses Tailwind CSS classes. Make sure you have Tailwind CSS installed and configured in your project:
+**Import the CSS** in your app's entry point:
 
-1. Install Tailwind CSS:
-
-```bash
-npm install -D tailwindcss postcss autoprefixer
-npx tailwindcss init -p
+```tsx
+// src/index.tsx or src/App.tsx
+import '@alwinkc/tanstack-table-components/styles.css';
 ```
 
-2. Configure your `tailwind.config.js` to include the library's components:
+That's it! No Tailwind configuration needed. The styles are pre-compiled and ready to use.
 
-```js
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-    "./node_modules/@alwinkc/tanstack-table-components/dist/**/*.{js,mjs}",
-  ],
-  darkMode: "class", // or 'media'
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-};
-```
-
-3. Add Tailwind directives to your CSS:
-
-```css
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-```
+> ✅ **Non-invasive CSS**: The styles are scoped to component classes only and won't affect your existing styles. No CSS reset or global styles are included.
 
 ## Usage
 
 ### Basic Example
 
 ```tsx
+import '@alwinkc/tanstack-table-components/styles.css';
 import {
   useReactTable,
   getCoreRowModel,
@@ -279,6 +257,30 @@ const columns: ColumnDef<User>[] = [
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
+
+## Troubleshooting
+
+### Styles Not Showing
+
+If your table appears unstyled:
+
+1. **Make sure you imported the CSS:**
+   ```tsx
+   import '@alwinkc/tanstack-table-components/styles.css';
+   ```
+
+2. **Check your bundler is processing CSS:**
+   - Vite: Should work out of the box
+   - Next.js: Should work out of the box
+   - Webpack: Make sure `css-loader` is configured
+
+### Dark Mode Not Working
+
+Add the `dark` class to your root HTML element:
+
+```tsx
+<html className="dark">
+```
 
 ## License
 
