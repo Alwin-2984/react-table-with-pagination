@@ -10,6 +10,63 @@
 
 @tailwind components;
 
+/* Library-specific base styles - Plain CSS, no global reset */
+/* These come BEFORE @tailwind components to have lower specificity */
+.tstc-th-base {
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 400;
+  letter-spacing: 0.025em;
+  color: rgb(107 114 128);
+  background-color: rgb(239 246 255);
+}
+
+:is(.dark *) .tstc-th-base {
+  color: rgb(156 163 175);
+  background-color: rgb(31 41 55);
+}
+
+.tstc-td-base {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 300;
+  color: rgb(17 24 39);
+}
+
+:is(.dark *) .tstc-td-base {
+  color: rgb(243 244 246);
+}
+
+.tstc-thead-row-base {
+  border-bottom-width: 1px;
+  border-color: rgb(243 244 246);
+}
+
+:is(.dark *) .tstc-thead-row-base {
+  border-color: rgb(55 65 81);
+}
+
+.tstc-tbody-base {
+  background-color: rgb(255 255 255);
+}
+
+.tstc-tbody-base > :not([hidden]) ~ :not([hidden]) {
+  border-top-width: 1px;
+  border-color: rgb(229 231 235);
+}
+
+:is(.dark *) .tstc-tbody-base {
+  background-color: rgb(17 24 39);
+}
+
+:is(.dark *) .tstc-tbody-base > :not([hidden]) ~ :not([hidden]) {
+  border-color: rgb(55 65 81);
+}
+
+/* Component structural styles */
 @layer components {
   /* Table Container */
   .tstc-wrapper {
@@ -20,31 +77,102 @@
     @apply min-w-full;
   }
 
-  /* Table Header */
-  .tstc-thead-row {
-    @apply border-b border-gray-100 dark:border-gray-700;
-  }
-
-  .tstc-th {
-    @apply px-3 py-2 text-left text-sm font-normal tracking-wide;
-    @apply text-gray-500 dark:text-gray-400 bg-blue-50 dark:bg-gray-800;
-  }
-
-  /* Table Body */
-  .tstc-tbody {
-    @apply divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900;
-  }
-
+  /* Keep base tr class for transitions */
   .tstc-tr {
-    @apply transition-colors duration-150 hover:bg-gray-50 dark:hover:bg-gray-800;
+    @apply transition-colors duration-150;
+  }
+
+  /* Keep base th/td classes for size modifiers */
+  .tstc-th {
+    /* Intentionally empty - modifiers will target this */
   }
 
   .tstc-td {
-    @apply px-3 py-2 text-sm font-light text-gray-900 dark:text-gray-100;
+    /* Intentionally empty - modifiers will target this */
   }
 
   .tstc-empty {
     @apply px-6 py-12 text-center text-sm text-gray-500 dark:text-gray-400;
+  }
+
+  .tstc-loading {
+    @apply px-6 py-12 text-center text-sm text-gray-500 dark:text-gray-400;
+  }
+
+  /* ========== User-Friendly Modifier Classes ========== */
+
+  /* Bordered variant */
+  .tstc-bordered {
+    @apply border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden;
+  }
+
+  .tstc-bordered .tstc-table {
+    @apply border-collapse;
+  }
+
+  .tstc-bordered .tstc-th-base,
+  .tstc-bordered .tstc-td-base {
+    @apply border-r border-gray-200 dark:border-gray-700;
+  }
+
+  .tstc-bordered .tstc-th-base:last-child,
+  .tstc-bordered .tstc-td-base:last-child {
+    @apply border-r-0;
+  }
+
+  /* Compact variant */
+  .tstc-compact .tstc-th-base,
+  .tstc-compact .tstc-td-base {
+    @apply px-2 py-1;
+  }
+
+  /* Size variants */
+  .tstc-size-sm .tstc-th-base,
+  .tstc-size-sm .tstc-td-base {
+    @apply px-2 py-1 text-xs;
+  }
+
+  .tstc-size-md .tstc-th-base,
+  .tstc-size-md .tstc-td-base {
+    @apply px-3 py-2 text-sm;
+  }
+
+  .tstc-size-lg .tstc-th-base,
+  .tstc-size-lg .tstc-td-base {
+    @apply px-4 py-3 text-base;
+  }
+
+  /* Sticky header */
+  .tstc-sticky-header thead {
+    @apply sticky top-0 z-10;
+  }
+
+  /* Striped rows */
+  .tstc-striped-even {
+    @apply bg-gray-50 dark:bg-gray-800;
+  }
+
+  .tstc-striped-odd {
+    @apply bg-white dark:bg-gray-900;
+  }
+
+  /* Hoverable rows */
+  .tstc-hoverable:hover {
+    @apply bg-blue-50 dark:bg-blue-900/20;
+  }
+
+  /* Selected row */
+  .tstc-selected {
+    @apply bg-blue-100 dark:bg-blue-900/40;
+  }
+
+  .tstc-selected:hover {
+    @apply bg-blue-200 dark:bg-blue-900/50;
+  }
+
+  /* Clickable rows */
+  .tstc-clickable {
+    @apply cursor-pointer;
   }
 
   /* Pagination Container */
@@ -103,4 +231,3 @@
     @apply cursor-default text-gray-400 dark:text-gray-500;
   }
 }
-

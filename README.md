@@ -32,6 +32,7 @@ npm install @tanstack/react-table react react-dom
 ```
 
 **Supported versions:**
+
 - React: ^18.0.0 or ^19.0.0
 - React DOM: ^18.0.0 or ^19.0.0
 - TanStack Table: ^8.0.0
@@ -42,7 +43,7 @@ npm install @tanstack/react-table react react-dom
 
 ```tsx
 // src/index.tsx or src/App.tsx
-import '@alwinkc/tanstack-table-components/styles.css';
+import "@alwinkc/tanstack-table-components/styles.css";
 ```
 
 That's it! No Tailwind configuration needed. The styles are pre-compiled and ready to use.
@@ -54,7 +55,7 @@ That's it! No Tailwind configuration needed. The styles are pre-compiled and rea
 ### Basic Example
 
 ```tsx
-import '@alwinkc/tanstack-table-components/styles.css';
+import "@alwinkc/tanstack-table-components/styles.css";
 import {
   useReactTable,
   getCoreRowModel,
@@ -133,14 +134,63 @@ function MyTable() {
 
 ### TableComponent
 
-The main table component that renders your data.
+The main table component that renders your data with extensive customization options.
 
-#### Props
+#### Simple/User-Friendly Props
 
-| Prop        | Type           | Required | Description                                |
-| ----------- | -------------- | -------- | ------------------------------------------ |
-| `table`     | `Table<TData>` | Yes      | TanStack Table instance                    |
-| `className` | `string`       | No       | Additional CSS classes for the wrapper div |
+Quick and easy props for common use cases:
+
+| Prop                  | Type                              | Default        | Description                             |
+| --------------------- | --------------------------------- | -------------- | --------------------------------------- |
+| `table`               | `Table<TData>`                    | **Required**   | TanStack Table instance                 |
+| `className`           | `string`                          | `""`           | Additional CSS classes for wrapper      |
+| `striped`             | `boolean`                         | `false`        | Alternating row background colors       |
+| `hoverable`           | `boolean`                         | `false`        | Row hover effects                       |
+| `bordered`            | `boolean`                         | `false`        | Add borders around table                |
+| `compact`             | `boolean`                         | `false`        | Reduced padding/spacing                 |
+| `stickyHeader`        | `boolean`                         | `false`        | Fixed header on scroll                  |
+| `loading`             | `boolean`                         | `false`        | Show loading state                      |
+| `loadingMessage`      | `string \| () => React.ReactNode` | `"Loading..."` | Custom loading message                  |
+| `highlightOnHover`    | `boolean`                         | `false`        | Highlight row on hover (blue highlight) |
+| `selectedRowId`       | `string \| number`                | `undefined`    | ID of selected row to highlight         |
+| `getRowId`            | `(row: Row<TData>) => string`     | `undefined`    | Function to get unique row ID           |
+| `size`                | `"sm" \| "md" \| "lg"`            | `undefined`    | Predefined size variants (sm/md/lg)     |
+| `emptyStateMessage`   | `string \| () => React.ReactNode` | `"No data..."` | Custom empty state message              |
+| `emptyStateClassName` | `string`                          | `undefined`    | Custom class for empty state            |
+
+#### Advanced Customization Props
+
+For complex scenarios requiring full control:
+
+**Header Customization:**
+
+| Prop                | Type                                         | Description                                     |
+| ------------------- | -------------------------------------------- | ----------------------------------------------- |
+| `theadClassName`    | `string`                                     | Custom class for `<thead>`                      |
+| `theadRowClassName` | `string`                                     | Custom class for header row                     |
+| `thClassName`       | `string \| (header) => string`               | Custom class for header cells (can be function) |
+| `thStyle`           | `CSSProperties \| (header) => CSSProperties` | Custom inline styles for header cells           |
+| `onHeaderClick`     | `(header: Header<TData>) => void`            | Click handler for header cells                  |
+
+**Body Customization:**
+
+| Prop             | Type                                             | Description                                   |
+| ---------------- | ------------------------------------------------ | --------------------------------------------- |
+| `tbodyClassName` | `string`                                         | Custom class for `<tbody>`                    |
+| `trClassName`    | `string \| (row, index) => string`               | Custom class for body rows (can be function)  |
+| `trStyle`        | `CSSProperties \| (row, index) => CSSProperties` | Custom inline styles for body rows            |
+| `tdClassName`    | `string \| (cell) => string`                     | Custom class for body cells (can be function) |
+| `tdStyle`        | `CSSProperties \| (cell) => CSSProperties`       | Custom inline styles for body cells           |
+
+**Event Handlers:**
+
+| Prop               | Type                          | Description                        |
+| ------------------ | ----------------------------- | ---------------------------------- |
+| `onRowClick`       | `(row: Row<TData>) => void`   | Click handler for rows             |
+| `onRowDoubleClick` | `(row: Row<TData>) => void`   | Double-click handler for rows      |
+| `onRowMouseEnter`  | `(row: Row<TData>) => void`   | Mouse enter handler for rows       |
+| `onRowMouseLeave`  | `(row: Row<TData>) => void`   | Mouse leave handler for rows       |
+| `onCellClick`      | `(cell: Cell<TData>) => void` | Click handler for individual cells |
 
 ### Pagination
 
@@ -189,6 +239,79 @@ const table = useReactTable<MyData>({ ... });
 ```
 
 ## Examples
+
+### Simple Table with Striped Rows
+
+```tsx
+<TableComponent table={table} striped hoverable size="md" />
+```
+
+### Table with Row Selection
+
+```tsx
+function SelectableTable() {
+  const [selectedId, setSelectedId] = useState<number | undefined>();
+
+  return (
+    <TableComponent
+      table={table}
+      hoverable
+      selectedRowId={selectedId}
+      getRowId={(row) => row.original.id}
+      onRowClick={(row) => setSelectedId(row.original.id)}
+    />
+  );
+}
+```
+
+### Compact Bordered Table
+
+```tsx
+<TableComponent table={table} bordered compact stickyHeader />
+```
+
+### Custom Row Styling
+
+```tsx
+<TableComponent
+  table={table}
+  trClassName={(row) =>
+    row.original.status === "active" ? "bg-green-50" : "bg-red-50"
+  }
+  tdClassName={(cell) =>
+    cell.column.id === "amount" ? "font-bold text-right" : ""
+  }
+/>
+```
+
+### Loading State
+
+```tsx
+function TableWithLoading() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  return (
+    <TableComponent
+      table={table}
+      loading={isLoading}
+      loadingMessage="Fetching data..."
+    />
+  );
+}
+```
+
+### Interactive Table
+
+```tsx
+<TableComponent
+  table={table}
+  hoverable
+  onRowClick={(row) => console.log("Row clicked:", row.original)}
+  onRowDoubleClick={(row) => navigate(`/details/${row.original.id}`)}
+  onCellClick={(cell) => console.log("Cell clicked:", cell.getValue())}
+  onHeaderClick={(header) => header.column.toggleSorting()}
+/>
+```
 
 ### With Server-Side Pagination
 
@@ -265,8 +388,9 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 If your table appears unstyled:
 
 1. **Make sure you imported the CSS:**
+
    ```tsx
-   import '@alwinkc/tanstack-table-components/styles.css';
+   import "@alwinkc/tanstack-table-components/styles.css";
    ```
 
 2. **Check your bundler is processing CSS:**

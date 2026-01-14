@@ -1,6 +1,6 @@
 {
   "name": "@alwinkc/tanstack-table-components",
-  "version": "1.0.7",
+  "version": "1.1.1",
   "description": "A React table component library built on TanStack Table with pagination support",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

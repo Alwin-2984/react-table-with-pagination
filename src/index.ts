@@ -1,10 +1,14 @@
 export { default as TableComponent } from "./components/TableComponent";
 export { default as Pagination } from "./components/Pagination";
 
-// Re-export types
-export type { Table as RTable, Cell, HeaderGroup, Row } from "@tanstack/react-table";
+// Export component prop types
+export type { TableComponentProps } from "./components/TableComponent";
 
-
-
-
-
+// Re-export useful TanStack Table types
+export type {
+  Table as RTable,
+  Cell,
+  HeaderGroup,
+  Row,
+  Header,
+} from "@tanstack/react-table";
